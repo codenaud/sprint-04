@@ -85,9 +85,9 @@ h1 {
   font-weight: 600;
   padding: 1rem;
   z-index: 3;
+  display: flex;
 }
 
-/* Exercice 2 */
 .value-emoji {
   cursor: pointer;
 }

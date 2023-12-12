@@ -1,4 +1,7 @@
 // tutorial: //https://www.sohamkamani.com/typescript/rest-http-api-call/
+document.addEventListener('DOMContentLoaded', () => {
+  chuckNorrisJokes();
+});
 
 console.log('hello');
 
@@ -30,11 +33,11 @@ function getJokes(): Promise<JokeResponse> {
   return (
     fetch(request)
       // the JSON body is taken from the response
-      .then((res) => res.json())
-      .then((res) => {
+      .then((response) => response.json())
+      .then((response) => {
         // The response has an `any` type, so we need to cast
         // it to the `User` type, and return it from the promise
-        return res as JokeResponse;
+        return response as JokeResponse;
       })
   );
 }
@@ -66,7 +69,7 @@ if (btnNextJoke instanceof Element) {
   });
 }
 
-// Exercici 2 [reportAcudits]
+// Exercici 3 [reportAcudits]
 const scoreButtons = document.querySelectorAll('.score-button');
 let reportJokes: { joke: string; score: number; date: string }[] = [];
 let currentScore: number | null = null; // Variable para almacenar la puntuación actual
@@ -116,3 +119,80 @@ scoreButtons.forEach((button, index) => {
     handleScoreButtonClick(score);
   });
 });
+
+// Nivell 2 (weather API)
+// API URL: https://weatherapi-com.p.rapidapi.com/current.json?q=53.1%2C-0.13
+
+const apiKey = 'c7a9318023982a05e89bbe262044580d';
+
+function obtenerDatosMeteorologicos(ciudad: string) {
+  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${apiKey}`;
+
+  return fetch(apiUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      const temperaturaCelsius = kelvinToCelsius(data.main.temp);
+      return {
+        temperatura: temperaturaCelsius,
+        icono: data.weather[0].icon,
+      };
+    })
+    .catch((error) => {
+      console.error('Error al obtener datos meteorológicos:', error);
+      throw error;
+    });
+}
+
+function kelvinToCelsius(kelvin: number): number {
+  return kelvin - 273.15;
+}
+
+function displayweather(ciudad: string) {
+  const weatherContainer = document.querySelector('.weather-container');
+  ciudad = 'Barcelona'; // Puedes cambiar a la ciudad que desees
+
+  obtenerDatosMeteorologicos(ciudad).then((datos) => {
+    console.log('Temperatura:', datos.temperatura);
+    console.log('Icono:', datos.icono);
+
+    if (!weatherContainer) {
+      throw new Error('No weather container found');
+    }
+
+    // Utiliza innerHTML de manera adecuada para concatenar el contenido
+    weatherContainer.innerHTML = `<img src="https://openweathermap.org/img/wn/${
+      datos.icono
+    }.png" alt="icono del tiempo" /><p> | ${datos.temperatura.toFixed(2)}°C</p>`;
+  });
+}
+
+// Llama a la función displayweather cuando la página se carga
+document.addEventListener('DOMContentLoaded', () => {
+  displayweather('Barcelona');
+});
+
+// Chuck Norris API Url: https://api.chucknorris.io/jokes/random
+
+function chuckNorrisJokes() {
+  console.log('Función llamada'); // Verifica si la función se llama
+
+  const chuckContainer = document.querySelector('.chuck-container');
+  const apiUrlOfChuck = 'https://api.chucknorris.io/jokes/random';
+
+  if (chuckContainer) {
+    return fetch(apiUrlOfChuck)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        // Asigna el valor al innerHTML del chuckContainer
+        chuckContainer.innerHTML = data.value;
+      })
+      .catch((error) => {
+        console.error('Error al obtener datos de Chuck Norris:', error);
+        throw error;
+      });
+  } else {
+    console.error('No se encontró el elemento con la clase `chuck-container`.');
+    return Promise.reject('Elemento no encontrado');
+  }
+}

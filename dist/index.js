@@ -1,4 +1,7 @@
 "use strict";
+document.addEventListener('DOMContentLoaded', () => {
+    chuckNorrisJokes();
+});
 console.log('hello');
 const btnNextJoke = document.querySelector('#next-joke');
 function getJokes() {
@@ -9,9 +12,9 @@ function getJokes() {
         headers: headers,
     });
     return (fetch(request)
-        .then((res) => res.json())
-        .then((res) => {
-        return res;
+        .then((response) => response.json())
+        .then((response) => {
+        return response;
     }));
 }
 const result = document.querySelector('#jokes');
@@ -72,4 +75,60 @@ scoreButtons.forEach((button, index) => {
         handleScoreButtonClick(score);
     });
 });
+const apiKey = 'c7a9318023982a05e89bbe262044580d';
+function obtenerDatosMeteorologicos(ciudad) {
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${apiKey}`;
+    return fetch(apiUrl)
+        .then((response) => response.json())
+        .then((data) => {
+        const temperaturaCelsius = kelvinToCelsius(data.main.temp);
+        return {
+            temperatura: temperaturaCelsius,
+            icono: data.weather[0].icon,
+        };
+    })
+        .catch((error) => {
+        console.error('Error al obtener datos meteorológicos:', error);
+        throw error;
+    });
+}
+function kelvinToCelsius(kelvin) {
+    return kelvin - 273.15;
+}
+function displayweather(ciudad) {
+    const weatherContainer = document.querySelector('.weather-container');
+    ciudad = 'Barcelona';
+    obtenerDatosMeteorologicos(ciudad).then((datos) => {
+        console.log('Temperatura:', datos.temperatura);
+        console.log('Icono:', datos.icono);
+        if (!weatherContainer) {
+            throw new Error('No weather container found');
+        }
+        weatherContainer.innerHTML = `<img src="https://openweathermap.org/img/wn/${datos.icono}.png" alt="icono del tiempo" /><p> | ${datos.temperatura.toFixed(2)}°C</p>`;
+    });
+}
+document.addEventListener('DOMContentLoaded', () => {
+    displayweather('Barcelona');
+});
+function chuckNorrisJokes() {
+    console.log('Función llamada');
+    const chuckContainer = document.querySelector('.chuck-container');
+    const apiUrlOfChuck = 'https://api.chucknorris.io/jokes/random';
+    if (chuckContainer) {
+        return fetch(apiUrlOfChuck)
+            .then((response) => response.json())
+            .then((data) => {
+            console.log(data);
+            chuckContainer.innerHTML = data.value;
+        })
+            .catch((error) => {
+            console.error('Error al obtener datos de Chuck Norris:', error);
+            throw error;
+        });
+    }
+    else {
+        console.error('No se encontró el elemento con la clase `chuck-container`.');
+        return Promise.reject('Elemento no encontrado');
+    }
+}
 //# sourceMappingURL=index.js.map
