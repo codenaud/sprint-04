@@ -123,7 +123,7 @@ scoreButtons.forEach((button, index) => {
 // Nivell 2 (weather API)
 // API URL: https://weatherapi-com.p.rapidapi.com/current.json?q=53.1%2C-0.13
 
-const apiKey = 'c7a9318023982a05e89bbe262044580d';
+const apiKey = '';
 
 function obtenerDatosMeteorologicos(ciudad: string) {
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${apiKey}`;

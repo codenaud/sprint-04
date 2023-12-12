@@ -75,7 +75,7 @@ scoreButtons.forEach((button, index) => {
         handleScoreButtonClick(score);
     });
 });
-const apiKey = 'c7a9318023982a05e89bbe262044580d';
+const apiKey = '';
 function obtenerDatosMeteorologicos(ciudad) {
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${apiKey}`;
     return fetch(apiUrl)
