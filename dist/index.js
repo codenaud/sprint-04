@@ -1,7 +1,4 @@
 "use strict";
-document.addEventListener('DOMContentLoaded', () => {
-    chuckNorrisJokes();
-});
 console.log('hello');
 const btnNextJoke = document.querySelector('#next-joke');
 function getJokes() {
@@ -75,7 +72,7 @@ scoreButtons.forEach((button, index) => {
         handleScoreButtonClick(score);
     });
 });
-const apiKey = '';
+const apiKey = 'c7a9318023982a05e89bbe262044580d';
 function obtenerDatosMeteorologicos(ciudad) {
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${apiKey}`;
     return fetch(apiUrl)
@@ -110,25 +107,36 @@ function displayweather(ciudad) {
 document.addEventListener('DOMContentLoaded', () => {
     displayweather('Barcelona');
 });
-function chuckNorrisJokes() {
-    console.log('Función llamada');
-    const chuckContainer = document.querySelector('.chuck-container');
-    const apiUrlOfChuck = 'https://api.chucknorris.io/jokes/random';
-    if (chuckContainer) {
-        return fetch(apiUrlOfChuck)
-            .then((response) => response.json())
-            .then((data) => {
-            console.log(data);
-            chuckContainer.innerHTML = data.value;
-        })
-            .catch((error) => {
-            console.error('Error al obtener datos de Chuck Norris:', error);
-            throw error;
-        });
+function randomJoke() {
+    const chuckNorrisProbability = 0.5;
+    const selectedApi = Math.random() < chuckNorrisProbability ? 'chuck' : 'icanhazdad';
+    let apiUrl;
+    if (selectedApi === 'chuck') {
+        apiUrl = 'https://api.chucknorris.io/jokes/random';
     }
     else {
-        console.error('No se encontró el elemento con la clase `chuck-container`.');
-        return Promise.reject('Elemento no encontrado');
+        apiUrl = 'https://icanhazdadjoke.com/';
     }
+    const headers = new Headers();
+    headers.set('Accept', 'application/json');
+    const request = new Request(apiUrl, {
+        method: 'GET',
+        headers: headers,
+    });
+    return fetch(request)
+        .then((res) => res.json())
+        .then((res) => {
+        const randomJokeContainer = document.querySelector('#randomJoke');
+        if (!randomJokeContainer) {
+            throw new Error('No element with id `randomJoke` found');
+        }
+        const jokeToShow = selectedApi === 'chuck' ? res.value : res.joke;
+        randomJokeContainer.innerHTML = jokeToShow;
+    })
+        .catch((error) => {
+        console.error('Error al obtener chiste aleatorio:', error);
+        throw error;
+    });
 }
+document.addEventListener('DOMContentLoaded', randomJoke);
 //# sourceMappingURL=index.js.map

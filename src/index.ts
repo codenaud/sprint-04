@@ -1,14 +1,12 @@
 // tutorial: //https://www.sohamkamani.com/typescript/rest-http-api-call/
-document.addEventListener('DOMContentLoaded', () => {
-  chuckNorrisJokes();
-});
 
 console.log('hello');
 
 const btnNextJoke = document.querySelector('#next-joke');
 
-// icanhazdadjoke.com API URL: https://icanhazdadjoke.com/
+//#region   ----->  FUNCION API => [icanhazdadjoke.com]
 
+// icanhazdadjoke.com API URL: https://icanhazdadjoke.com/
 interface JokeResponse {
   id: string;
   joke: string;
@@ -42,6 +40,10 @@ function getJokes(): Promise<JokeResponse> {
   );
 }
 
+//-----------------------------------------------------------------------
+//#endregion
+
+//#region   ----->  IMPRIMIR RESULTADO EN #jokes => [icanhazdadjoke.com]
 const result = document.querySelector('#jokes');
 if (!result) {
   throw new Error('No element with class `jokes`');
@@ -58,6 +60,9 @@ function initialJoke() {
 
 // Llama a loadInitialJoke cuando la página se carga
 document.addEventListener('DOMContentLoaded', initialJoke);
+
+//-----------------------------------------------------------------------
+//#endregion
 
 // Click event listener for the button
 if (btnNextJoke instanceof Element) {
@@ -120,10 +125,12 @@ scoreButtons.forEach((button, index) => {
   });
 });
 
+//#region   ----->  FUNCION API => [tiempo weather]
+
 // Nivell 2 (weather API)
 // API URL: https://weatherapi-com.p.rapidapi.com/current.json?q=53.1%2C-0.13
 
-const apiKey = '';
+const apiKey = 'c7a9318023982a05e89bbe262044580d';
 
 function obtenerDatosMeteorologicos(ciudad: string) {
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${apiKey}`;
@@ -171,6 +178,12 @@ document.addEventListener('DOMContentLoaded', () => {
   displayweather('Barcelona');
 });
 
+//-----------------------------------------------------------------------
+//#endregion
+
+//#region   ----->  FUNCION API => [Chuck Norris] => COMENTADA!
+/* ------- FUNCION DE CHUCK NORRIS SEPARADA
+
 // Chuck Norris API Url: https://api.chucknorris.io/jokes/random
 
 function chuckNorrisJokes() {
@@ -196,3 +209,57 @@ function chuckNorrisJokes() {
     return Promise.reject('Elemento no encontrado');
   }
 }
+
+// Llama a la función chuckNorrisJokes cuando la página se carga
+document.addEventListener('DOMContentLoaded', () => {
+  chuckNorrisJokes();
+});
+
+//-----------------------------------------------------------------------
+*/
+//#endregion
+
+//#region   ----->  FUNCION API => [Random Jokes of Chuck Norris y icanhazdadjoke.com]
+function randomJoke(): Promise<void> {
+  const chuckNorrisProbability = 0.5;
+  const selectedApi = Math.random() < chuckNorrisProbability ? 'chuck' : 'icanhazdad';
+
+  let apiUrl: string;
+
+  if (selectedApi === 'chuck') {
+    apiUrl = 'https://api.chucknorris.io/jokes/random';
+  } else {
+    apiUrl = 'https://icanhazdadjoke.com/';
+  }
+
+  const headers: Headers = new Headers();
+  headers.set('Accept', 'application/json');
+
+  const request: RequestInfo = new Request(apiUrl, {
+    method: 'GET',
+    headers: headers,
+  });
+
+  return fetch(request)
+    .then((res) => res.json())
+    .then((res) => {
+      const randomJokeContainer = document.querySelector('#randomJoke');
+      if (!randomJokeContainer) {
+        throw new Error('No element with id `randomJoke` found');
+      }
+
+      // Utiliza res.value en lugar de res.joke para Chuck Norris API
+      const jokeToShow = selectedApi === 'chuck' ? res.value : res.joke;
+
+      randomJokeContainer.innerHTML = jokeToShow;
+    })
+    .catch((error) => {
+      console.error('Error al obtener chiste aleatorio:', error);
+      throw error;
+    });
+}
+// Llama a la función randomJoke cuando la página se carga
+document.addEventListener('DOMContentLoaded', randomJoke);
+
+//-----------------------------------------------------------------------
+//#endregion
