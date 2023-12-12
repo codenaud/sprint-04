@@ -66,3 +66,17 @@ if (btn instanceof Element) {
     });
   });
 }
+
+// Exercici 2 [reportAcudits]
+
+interface ReportJokes {
+  joke: string;
+  score: number;
+  date: string;
+}
+
+/* const reportJokes {
+  joke: "...",
+  score:1,
+  date: ...
+}; */

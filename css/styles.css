@@ -86,3 +86,8 @@ h1 {
   padding: 1rem;
   z-index: 3;
 }
+
+/* Exercice 2 */
+.value-emoji {
+  cursor: pointer;
+}
