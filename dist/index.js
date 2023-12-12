@@ -15,14 +15,14 @@ function getJokes() {
         return res;
     }));
 }
-const result = document.querySelector('.jokes');
+const result = document.querySelector('#jokes');
 if (!result) {
     throw new Error('No element with class `jokes`');
 }
 function initialJoke() {
     getJokes().then((jokes) => {
         if (result) {
-            result.innerHTML = jokes.joke;
+            result.innerHTML = `${jokes.joke}`;
         }
     });
 }
@@ -31,7 +31,7 @@ if (btn instanceof Element) {
     btn.addEventListener('click', () => {
         getJokes().then((jokes) => {
             console.log(jokes.joke);
-            result.innerHTML = jokes.joke;
+            result.innerHTML = `${jokes.joke}`;
         });
     });
 }

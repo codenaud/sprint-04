@@ -4,15 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Styles CSS -->
+    <link rel="stylesheet" href="css/styles.css">
     <title>Sprint 04 [icanhazdadjoke.com API] | It Academy</title>
 </head>
 
 <body>
-    <h1>Jokes</h1>
-    <div class="container">
-        <div class="jokes" id="jokes"></div>
-        <button type="submit" class="">Next Joke</button>
-
+    <div class="weather-container">
+        <p>Avui: parcialment ennuvolat</p>
+    </div>
+    <div class="main-container">
+        <div class="jokes-container">
+            <div class="title">
+                <h1>Preparat per riure </h1>
+                <img src="img/smile-emoji.png" alt="smile emoji" width="25">
+            </div>
+            <div class="jokes">
+                <q id="jokes"></q>
+            </div>
+            <button type="submit" class="btn">Següent acudit</button>
+        </div>
     </div>
     <script src="dist/index.js"></script>
 </body>
