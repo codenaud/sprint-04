@@ -1,54 +1,53 @@
-// tutorial: //https://www.sohamkamani.com/typescript/rest-http-api-call/
-
-console.log('hello');
-
 const btnNextJoke = document.querySelector('#next-joke');
 
-//#region   ----->  FUNCION API => [icanhazdadjoke.com]
+//#region | 00 ---> DOC [INFO]
 
-// icanhazdadjoke.com API URL: https://icanhazdadjoke.com/
+// API: icanhazdadjoke.com URL: https://icanhazdadjoke.com/
+// tutorial: //https://www.sohamkamani.com/typescript/rest-http-api-call/
+
+//-----------------------------------------------------------------------
+//#endregion
+
+//#region | 01 ---> FUNCIÓN getJokes => FUNCION API => [icanhazdadjoke.com]
+// TypeScript definición para la llamada a la API
 interface JokeResponse {
   id: string;
   joke: string;
   status: number;
 }
 
+// ---> FUNCIÓN getJokes =>
 function getJokes(): Promise<JokeResponse> {
-  // We can use the `Headers` constructor to create headers
-  // and assign it as the type of the `headers` variable
   const headers: Headers = new Headers();
-  // Add a few headers
   headers.set('Accept', 'application/json');
-
-  // Create the request object, which will be a RequestInfo type.
-  // Here, we will pass in the URL as well as the options object as parameters.
   const request: RequestInfo = new Request('https://icanhazdadjoke.com/', {
     method: 'GET',
     headers: headers,
   });
-
-  // For our example, the data is stored on a static `users.json` file
   return (
     fetch(request)
       // the JSON body is taken from the response
       .then((response) => response.json())
       .then((response) => {
-        // The response has an `any` type, so we need to cast
-        // it to the `User` type, and return it from the promise
         return response as JokeResponse;
       })
   );
 }
-
 //-----------------------------------------------------------------------
 //#endregion
 
-//#region   ----->  IMPRIMIR RESULTADO EN #jokes => [icanhazdadjoke.com]
+//#region | 02 --->  IMPRIMIR RESULTADO EN #jokes => [icanhazdadjoke.com]
+
 const result = document.querySelector('#jokes');
+
+//  02.1  ---> COMPROBACIÓN
+// comprobación fuera de la función initialJoke para asegurarse de que result no sea null antes de entrar en la función
 if (!result) {
   throw new Error('No element with class `jokes`');
 }
-// Función para cargar una broma inicial
+
+//  02.2  ---> FUNCIÓN CARGAR JOKE INCIAL
+// Cargar una broma inicial al cargar la página
 function initialJoke() {
   getJokes().then((jokes) => {
     if (result) {
@@ -61,9 +60,7 @@ function initialJoke() {
 // Llama a loadInitialJoke cuando la página se carga
 document.addEventListener('DOMContentLoaded', initialJoke);
 
-//-----------------------------------------------------------------------
-//#endregion
-
+//  02.3  ---> FUNCIONALIDAD BOTÓN [btnNextJoke]
 // Click event listener for the button
 if (btnNextJoke instanceof Element) {
   btnNextJoke.addEventListener('click', () => {

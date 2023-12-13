@@ -1,5 +1,4 @@
 "use strict";
-console.log('hello');
 const btnNextJoke = document.querySelector('#next-joke');
 function getJokes() {
     const headers = new Headers();
