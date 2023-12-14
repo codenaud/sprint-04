@@ -71,8 +71,15 @@ if (btnNextJoke instanceof Element) {
   });
 }
 
-// Exercici 3 [reportAcudits]
+//-----------------------------------------------------------------------
+//#endregion
+
+//#region | 03 --->  PUNTUACIÓN Y GUARDAR DATO EN ARRAY
+
 const scoreButtons = document.querySelectorAll('.score-button');
+
+// 03.1  ---> CREACIÓN ARRAY [reportJokes]
+// Crear Array reportjokes
 let reportJokes: { joke: string; score: number; date: string }[] = [];
 let currentScore: number | null = null; // Variable para almacenar la puntuación actual
 
@@ -85,36 +92,38 @@ function displayJoke(joke: string) {
   result.innerHTML = joke;
 }
 
+// 03.2 ---> FUNCIÓN almacenar 'score' en una varible para poder mostrarlo
 function handleScoreButtonClick(score: number) {
   // Actualiza la variable global de puntuación actual
   currentScore = score;
   console.log(`Puntuación actual: ${currentScore}`);
 }
 
-document.addEventListener('DOMContentLoaded', initialJoke);
-
+// 03.3 ---> Match entre SCORE y JOKE para almacenar en la array REPORTJOKES
 if (btnNextJoke instanceof Element) {
   btnNextJoke.addEventListener('click', () => {
-    const currentJoke = document.querySelector('#jokes')?.textContent;
-    if (currentJoke && currentScore !== null) {
-      const currentDate = new Date().toISOString();
-      const jokeEntry = { joke: currentJoke, score: currentScore, date: currentDate };
-      reportJokes.push(jokeEntry);
+    const currentJoke = document.querySelector('#jokes')?.textContent ?? ''; // Asegúrate de que currentJoke sea una cadena
+    const currentDate = new Date().toISOString();
 
-      // Log the current state of reportJokes
-      console.log('Reported Jokes:', reportJokes);
+    // Si no hay una puntuación asignada, podrías asignar un valor predeterminado, como 0
+    const currentScoreToSave = currentScore !== null ? currentScore : 0;
 
-      // Restablece la puntuación actual a null después de agregar la broma al array
-      currentScore = null;
+    const jokeEntry = { joke: currentJoke, score: currentScoreToSave, date: currentDate };
+    reportJokes.push(jokeEntry);
 
-      // Muestra la siguiente broma
-      getJokes().then((jokes) => {
-        displayJoke(jokes.joke);
-      });
-    }
+    // Log the current state of reportJokes
+    console.log('Reported Jokes:', reportJokes);
+
+    // Restablece la puntuación actual a null después de agregar la broma al array
+    currentScore = null;
+
+    // Muestra la siguiente broma
+    getJokes().then((jokes) => {
+      displayJoke(jokes.joke);
+    });
   });
 }
-
+// 03.4 ---> Actualizamos la variable 'currentScore' con la puntuación actual
 scoreButtons.forEach((button, index) => {
   button.addEventListener('click', () => {
     const score = index + 1; // Since index is zero-based
@@ -122,7 +131,10 @@ scoreButtons.forEach((button, index) => {
   });
 });
 
-//#region   ----->  FUNCION API => [tiempo weather]
+//-----------------------------------------------------------------------
+//#endregion
+
+//#region | 04 --->  FUNCION API => [tiempo weather]
 
 // Nivell 2 (weather API)
 // API URL: https://weatherapi-com.p.rapidapi.com/current.json?q=53.1%2C-0.13
@@ -178,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //-----------------------------------------------------------------------
 //#endregion
 
-//#region   ----->  FUNCION API => [Chuck Norris] => COMENTADA!
+//#region | 05 --->  FUNCION API => [Chuck Norris] => COMENTADA!
 /* ------- FUNCION DE CHUCK NORRIS SEPARADA
 
 // Chuck Norris API Url: https://api.chucknorris.io/jokes/random
@@ -216,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
 */
 //#endregion
 
-//#region   ----->  FUNCION API => [Random Jokes of Chuck Norris y icanhazdadjoke.com]
+//#region | 06 --->  FUNCION API => [Random Jokes of Chuck Norris y icanhazdadjoke.com]
 function randomJoke(): Promise<void> {
   const chuckNorrisProbability = 0.5;
   const selectedApi = Math.random() < chuckNorrisProbability ? 'chuck' : 'icanhazdad';

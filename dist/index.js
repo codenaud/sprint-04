@@ -48,21 +48,19 @@ function handleScoreButtonClick(score) {
     currentScore = score;
     console.log(`Puntuación actual: ${currentScore}`);
 }
-document.addEventListener('DOMContentLoaded', initialJoke);
 if (btnNextJoke instanceof Element) {
     btnNextJoke.addEventListener('click', () => {
-        var _a;
-        const currentJoke = (_a = document.querySelector('#jokes')) === null || _a === void 0 ? void 0 : _a.textContent;
-        if (currentJoke && currentScore !== null) {
-            const currentDate = new Date().toISOString();
-            const jokeEntry = { joke: currentJoke, score: currentScore, date: currentDate };
-            reportJokes.push(jokeEntry);
-            console.log('Reported Jokes:', reportJokes);
-            currentScore = null;
-            getJokes().then((jokes) => {
-                displayJoke(jokes.joke);
-            });
-        }
+        var _a, _b;
+        const currentJoke = (_b = (_a = document.querySelector('#jokes')) === null || _a === void 0 ? void 0 : _a.textContent) !== null && _b !== void 0 ? _b : '';
+        const currentDate = new Date().toISOString();
+        const currentScoreToSave = currentScore !== null ? currentScore : 0;
+        const jokeEntry = { joke: currentJoke, score: currentScoreToSave, date: currentDate };
+        reportJokes.push(jokeEntry);
+        console.log('Reported Jokes:', reportJokes);
+        currentScore = null;
+        getJokes().then((jokes) => {
+            displayJoke(jokes.joke);
+        });
     });
 }
 scoreButtons.forEach((button, index) => {
