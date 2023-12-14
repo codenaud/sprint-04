@@ -1,6 +1,6 @@
 # Sprint 04: API & TypeScript
 
-[![IT Academy](img/git-screenshot.png)](https://codenaud.github.io/sprint-02/)
+[![IT Academy](img/git-screenshot.png)](https://codenaud.github.io/sprint-04/)
 
 ## Introduction
 
