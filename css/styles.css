@@ -135,5 +135,6 @@ h1 {
   transform: translate(0px, -10px);
 }
 
-.bg-svg {
+.randomJoke-container {
+  text-align: center;
 }
