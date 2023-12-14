@@ -1,5 +1,6 @@
 const btnNextJoke = document.querySelector('#next-joke');
-
+//#region | 01, 02, 03 ---> Just 1 API FUNCTION => [icanhazdadjoke.com]
+/*
 //#region | 00 ---> DOC [INFO]
 
 // API: icanhazdadjoke.com URL: https://icanhazdadjoke.com/
@@ -134,12 +135,17 @@ scoreButtons.forEach((button, index) => {
 //-----------------------------------------------------------------------
 //#endregion
 
+//-----------------------------------------------------------------------
+*/
+//#endregion
+
 //#region | 04 --->  FUNCION API => [tiempo weather]
 
 // Nivell 2 (weather API)
 // API URL: https://weatherapi-com.p.rapidapi.com/current.json?q=53.1%2C-0.13
 
-const apiKey = 'c7a9318023982a05e89bbe262044580d';
+// Esta API esta oculta. Es exclusiva para mostrar solo en It Academy.
+const apiKey = '';
 
 function obtenerDatosMeteorologicos(ciudad: string) {
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${apiKey}`;
