@@ -36,7 +36,8 @@ To run the project locally, follow these steps:
 2. Install Dependencies: `npm install`
 3. Install TypeScript: `npm install -g typescript`
 4. Compile TypeScript: `tsc`
-5. Launch the Application:
+
+Launch the Application:
 
 - Install the **Live Server** extension in Visual Studio Code.
 - Open the project folder in VSCode and right-click on the **index.html** file.
