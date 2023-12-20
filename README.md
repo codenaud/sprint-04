@@ -33,9 +33,14 @@ The icanhazdadjoke API was provided by IT Academy Barcelona Activa. The other AP
 To run the project locally, follow these steps:
 
 1. Clone this repository.
-2. Run `npm install` to install all dependencies.
-3. Run `npm start` to start the server.
-4. Open your browser and visit `http://localhost:3000` to see the application in action!
+2. Install Dependencies: `npm install`
+3. Install TypeScript: `npm install -g typescript`
+4. Compile TypeScript: `tsc`
+5. Launch the Application:
+
+- Install the **Live Server** extension in Visual Studio Code.
+- Open the project folder in VSCode and right-click on the **index.html** file.
+- Select **Open with Live Server** to launch the application.
 
 ## Knowledge
 
